@@ -11,7 +11,7 @@ from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-resume_filename = "AasthaShukla_SDE_Resume.pdf"  # Update as necessary
+resume_filename = "Rakesh_Palle_Resume.pdf"  # Update as necessary
 resume_path = os.path.join("email_assets", resume_filename)
 
 # Set up logging
@@ -56,6 +56,12 @@ def send_email(sender_email, sender_password, recipient_email, subject, message,
             file.write(recipient_email + '\n')
 
         server.quit()
+    except smtplib.SMTPAuthenticationError:
+        logger.error("Authentication failed. Check your email and password.")
+        raise
+    except smtplib.SMTPException as e:
+        logger.error(f"SMTP error occurred: {e}")
+        raise
     except Exception as e:
         logger.error("Error sending email:", exc_info=True)
         raise e
